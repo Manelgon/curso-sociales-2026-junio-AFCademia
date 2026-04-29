@@ -199,21 +199,17 @@ function DescargaContent() {
         {/* MATERIALS GRID */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 56 }}>
           {MATERIALS.map((m) => (
-            <a
+            <div
               key={m.num}
-              href={m.file}
-              download={m.file.split('/').pop()}
               style={{
                 background: '#fff',
                 border: '1.5px solid #e8e4dc',
                 borderRadius: 16,
                 padding: 24,
-                textDecoration: 'none',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 12,
                 boxShadow: '0 2px 12px rgba(0,63,107,0.06)',
-                cursor: 'pointer',
                 transition: 'transform 0.15s ease, box-shadow 0.15s ease',
               }}
               onMouseEnter={e => {
@@ -233,29 +229,53 @@ function DescargaContent() {
                 }}>
                   {m.tag}
                 </span>
-                <div style={{
-                  width: 32, height: 32, borderRadius: '50%', background: '#003F6B',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
+                <button
+                  onClick={() => {
+                    const link = document.createElement('a')
+                    link.href = m.file
+                    link.download = m.file.split('/').pop() || 'material'
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                  }}
+                  style={{
+                    width: 32, height: 32, borderRadius: '50%', background: '#003F6B',
+                    border: 'none',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'background 0.2s',
+                  }}
+                  onMouseEnter={e => {
+                    (e.target as HTMLElement).style.background = '#012A47'
+                  }}
+                  onMouseLeave={e => {
+                    (e.target as HTMLElement).style.background = '#003F6B'
+                  }}
+                >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                     <polyline points="7 10 12 15 17 10"/>
                     <line x1="12" y1="15" x2="12" y2="3"/>
                   </svg>
-                </div>
+                </button>
               </div>
               <div>
                 <div style={{ fontSize: 11, color: '#aaa8a0', marginBottom: 4 }}>Material {m.num}</div>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: '#003F6B', marginBottom: 4, lineHeight: 1.3 }}>{m.title}</h3>
                 <p style={{ fontSize: 13, color: '#7a7060' }}>{m.subtitle}</p>
               </div>
-              <div style={{ marginTop: 'auto', color: '#F47A20', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <a
+                href={m.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginTop: 'auto', color: '#F47A20', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', cursor: 'pointer' }}
+              >
                 Abrir recurso
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
                 </svg>
-              </div>
-            </a>
+              </a>
+            </div>
           ))}
         </div>
 
