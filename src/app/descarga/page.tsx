@@ -9,35 +9,40 @@ const MATERIALS = [
     num: '01',
     title: 'Manual del Alumno',
     subtitle: 'Construye tu automatización paso a paso',
-    file: '/01 Manual del Alumno.html',
+    html: '/01 Manual del Alumno.html',
+    pdf: '/Manual del Alumno · Construye tu automatización paso a paso · AFCademIA.pdf',
     tag: 'PDF Guía',
   },
   {
     num: '02',
     title: 'Cuaderno de Prácticas',
     subtitle: 'Ejercicios para consolidar lo aprendido',
-    file: '/02 Cuaderno de Practicas.html',
+    html: '/02 Cuaderno de Practicas.html',
+    pdf: '/Cuaderno de prácticas · AFCademIA.pdf',
     tag: 'Ejercicios',
   },
   {
     num: '03',
     title: 'Diapositivas de la Charla',
     subtitle: 'Automatización emails con IA',
-    file: '/03 Diapositivas.html',
+    html: '/03 Diapositivas.html',
+    pdf: '/Diapositivas · Automatización emails con IA · AFCademIA.pdf',
     tag: 'Presentación',
   },
   {
     num: '04',
     title: 'Cheatsheet Make.com + IA',
     subtitle: 'Referencia rápida siempre a mano',
-    file: '/04 Cheatsheet.html',
+    html: '/04 Cheatsheet.html',
+    pdf: '/Cheatsheet · Make.com + IA · AFCademIA.pdf',
     tag: 'Referencia rápida',
   },
   {
     num: '05',
     title: 'Plantillas de Prompts',
     subtitle: 'Los 3 prompts listos para copiar y pegar',
-    file: '/05 Plantillas Prompts.html',
+    html: '/05 Plantillas Prompts.html',
+    pdf: '/Plantillas de prompts · AFCademIA.pdf',
     tag: 'Prompts IA',
   },
 ]
@@ -229,35 +234,67 @@ function DescargaContent() {
                 }}>
                   {m.tag}
                 </span>
-                <button
-                  onClick={() => {
-                    const link = document.createElement('a')
-                    link.href = m.file
-                    link.download = m.file.split('/').pop() || 'material'
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link)
-                  }}
-                  style={{
-                    width: 32, height: 32, borderRadius: '50%', background: '#003F6B',
-                    border: 'none',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={e => {
-                    (e.target as HTMLElement).style.background = '#012A47'
-                  }}
-                  onMouseLeave={e => {
-                    (e.target as HTMLElement).style.background = '#003F6B'
-                  }}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                </button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    onClick={() => {
+                      const link = document.createElement('a')
+                      link.href = (m as any).html
+                      link.download = ((m as any).html.split('/').pop() || 'material').replace('.html', '')
+                      document.body.appendChild(link)
+                      link.click()
+                      document.body.removeChild(link)
+                    }}
+                    title="Descargar HTML"
+                    style={{
+                      width: 32, height: 32, borderRadius: '50%', background: '#F47A20',
+                      border: 'none',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={e => {
+                      (e.target as HTMLElement).style.background = '#e06b1b'
+                    }}
+                    onMouseLeave={e => {
+                      (e.target as HTMLElement).style.background = '#F47A20'
+                    }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const link = document.createElement('a')
+                      link.href = (m as any).pdf
+                      link.download = ((m as any).pdf.split('/').pop() || 'material')
+                      document.body.appendChild(link)
+                      link.click()
+                      document.body.removeChild(link)
+                    }}
+                    title="Descargar PDF"
+                    style={{
+                      width: 32, height: 32, borderRadius: '50%', background: '#003F6B',
+                      border: 'none',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s',
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: '#fff',
+                    }}
+                    onMouseEnter={e => {
+                      (e.target as HTMLElement).style.background = '#012A47'
+                    }}
+                    onMouseLeave={e => {
+                      (e.target as HTMLElement).style.background = '#003F6B'
+                    }}
+                  >
+                    PDF
+                  </button>
+                </div>
               </div>
               <div>
                 <div style={{ fontSize: 11, color: '#aaa8a0', marginBottom: 4 }}>Material {m.num}</div>
@@ -265,7 +302,7 @@ function DescargaContent() {
                 <p style={{ fontSize: 13, color: '#7a7060' }}>{m.subtitle}</p>
               </div>
               <a
-                href={m.file}
+                href={(m as any).html}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ marginTop: 'auto', color: '#F47A20', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', cursor: 'pointer' }}
