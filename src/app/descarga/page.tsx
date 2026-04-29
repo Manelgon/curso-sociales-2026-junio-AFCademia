@@ -51,6 +51,151 @@ type Status = 'loading' | 'valid' | 'invalid' | 'expired'
 
 import { Suspense } from 'react'
 
+function MaterialItem({ m }: { m: typeof MATERIALS[0] }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div
+      style={{
+        background: '#fff',
+        border: '1.5px solid #e8e4dc',
+        borderRadius: 16,
+        boxShadow: '0 2px 12px rgba(0,63,107,0.06)',
+        transition: 'box-shadow 0.15s ease',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,63,107,0.12)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,63,107,0.06)'
+      }}
+    >
+      {/* HEADER */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 24px', borderBottom: expanded ? '1px solid #e8e4dc' : 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flex: 1 }}>
+          <div>
+            <div style={{ fontSize: 11, color: '#aaa8a0', marginBottom: 4 }}>Material {m.num}</div>
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: '#003F6B', marginBottom: 4 }}>{m.title}</h3>
+            <p style={{ fontSize: 13, color: '#7a7060' }}>{m.subtitle}</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setExpanded(!expanded)}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#F47A20',
+            fontSize: 20,
+            transition: 'transform 0.2s',
+            transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        >
+          ▼
+        </button>
+      </div>
+
+      {/* DROPDOWN MENU */}
+      {expanded && (
+        <div style={{ padding: '16px 24px', borderTop: '1px solid #e8e4dc', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <button
+            onClick={() => {
+              const link = document.createElement('a')
+              link.href = (m as any).html
+              link.download = ((m as any).html.split('/').pop() || 'material').replace('.html', '')
+              document.body.appendChild(link)
+              link.click()
+              document.body.removeChild(link)
+            }}
+            style={{
+              background: '#F47A20',
+              color: '#fff',
+              border: 'none',
+              padding: '12px 16px',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: 14,
+              fontWeight: 600,
+              textAlign: 'left',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.target as HTMLElement).style.background = '#e06b1b'
+            }}
+            onMouseLeave={e => {
+              (e.target as HTMLElement).style.background = '#F47A20'
+            }}
+          >
+            ⬇️ Descargar HTML
+          </button>
+
+          <button
+            onClick={() => {
+              const link = document.createElement('a')
+              link.href = (m as any).pdf
+              link.download = ((m as any).pdf.split('/').pop() || 'material')
+              document.body.appendChild(link)
+              link.click()
+              document.body.removeChild(link)
+            }}
+            style={{
+              background: '#003F6B',
+              color: '#fff',
+              border: 'none',
+              padding: '12px 16px',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: 14,
+              fontWeight: 600,
+              textAlign: 'left',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.target as HTMLElement).style.background = '#012A47'
+            }}
+            onMouseLeave={e => {
+              (e.target as HTMLElement).style.background = '#003F6B'
+            }}
+          >
+            ⬇️ Descargar PDF
+          </button>
+
+          <a
+            href={(m as any).html}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: 'rgba(244,122,32,0.1)',
+              color: '#F47A20',
+              border: 'none',
+              padding: '12px 16px',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: 14,
+              fontWeight: 600,
+              textAlign: 'left',
+              textDecoration: 'none',
+              display: 'block',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.2)'
+            }}
+            onMouseLeave={e => {
+              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.1)'
+            }}
+          >
+            🔗 Abrir recurso
+          </a>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function DescargaContent() {
   const params = useSearchParams()
   const token = params.get('token')
@@ -201,118 +346,10 @@ function DescargaContent() {
 
       <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px 80px', transform: 'translateY(-40px)' }}>
 
-        {/* MATERIALS GRID */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 56 }}>
+        {/* MATERIALS LIST */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 56 }}>
           {MATERIALS.map((m) => (
-            <div
-              key={m.num}
-              style={{
-                background: '#fff',
-                border: '1.5px solid #e8e4dc',
-                borderRadius: 16,
-                padding: 24,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-                boxShadow: '0 2px 12px rgba(0,63,107,0.06)',
-                transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = 'translateY(-3px)'
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,63,107,0.12)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,63,107,0.06)'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{
-                  fontSize: 11, fontWeight: 700, color: '#F47A20',
-                  letterSpacing: '0.08em', textTransform: 'uppercase' as const,
-                  background: 'rgba(244,122,32,0.1)', padding: '4px 10px', borderRadius: 100,
-                }}>
-                  {m.tag}
-                </span>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <button
-                    onClick={() => {
-                      const link = document.createElement('a')
-                      link.href = (m as any).html
-                      link.download = ((m as any).html.split('/').pop() || 'material').replace('.html', '')
-                      document.body.appendChild(link)
-                      link.click()
-                      document.body.removeChild(link)
-                    }}
-                    title="Descargar HTML"
-                    style={{
-                      width: 32, height: 32, borderRadius: '50%', background: '#F47A20',
-                      border: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'background 0.2s',
-                    }}
-                    onMouseEnter={e => {
-                      (e.target as HTMLElement).style.background = '#e06b1b'
-                    }}
-                    onMouseLeave={e => {
-                      (e.target as HTMLElement).style.background = '#F47A20'
-                    }}
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                      <polyline points="7 10 12 15 17 10"/>
-                      <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => {
-                      const link = document.createElement('a')
-                      link.href = (m as any).pdf
-                      link.download = ((m as any).pdf.split('/').pop() || 'material')
-                      document.body.appendChild(link)
-                      link.click()
-                      document.body.removeChild(link)
-                    }}
-                    title="Descargar PDF"
-                    style={{
-                      width: 32, height: 32, borderRadius: '50%', background: '#003F6B',
-                      border: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'background 0.2s',
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: '#fff',
-                    }}
-                    onMouseEnter={e => {
-                      (e.target as HTMLElement).style.background = '#012A47'
-                    }}
-                    onMouseLeave={e => {
-                      (e.target as HTMLElement).style.background = '#003F6B'
-                    }}
-                  >
-                    PDF
-                  </button>
-                </div>
-              </div>
-              <div>
-                <div style={{ fontSize: 11, color: '#aaa8a0', marginBottom: 4 }}>Material {m.num}</div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#003F6B', marginBottom: 4, lineHeight: 1.3 }}>{m.title}</h3>
-                <p style={{ fontSize: 13, color: '#7a7060' }}>{m.subtitle}</p>
-              </div>
-              <a
-                href={(m as any).html}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ marginTop: 'auto', color: '#F47A20', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', cursor: 'pointer' }}
-              >
-                Abrir recurso
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
+            <MaterialItem key={m.num} m={m} />
           ))}
         </div>
 
