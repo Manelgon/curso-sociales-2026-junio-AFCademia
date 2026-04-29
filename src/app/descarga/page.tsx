@@ -202,8 +202,7 @@ function DescargaContent() {
             <a
               key={m.num}
               href={m.file}
-              target="_blank"
-              rel="noopener noreferrer"
+              download={m.file.split('/').pop()}
               style={{
                 background: '#fff',
                 border: '1.5px solid #e8e4dc',
@@ -304,6 +303,10 @@ function DescargaContent() {
               href="https://afcademia.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault()
+                window.open('https://afcademia.com', '_blank')
+              }}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#F47A20', color: '#fff',
@@ -312,7 +315,7 @@ function DescargaContent() {
                 boxShadow: '0 0 30px rgba(244,122,32,0.35)',
               }}
             >
-              Descubrir AFCademIA
+              Ir al curso
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
               </svg>
