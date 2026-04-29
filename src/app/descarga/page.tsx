@@ -33,6 +33,13 @@ const MATERIALS = [
     file: '/04 Cheatsheet.html',
     tag: 'Referencia rápida',
   },
+  {
+    num: '05',
+    title: 'Plantillas de Prompts',
+    subtitle: 'Los 3 prompts listos para copiar y pegar',
+    file: '/05 Plantillas Prompts.html',
+    tag: 'Prompts IA',
+  },
 ]
 
 type Status = 'loading' | 'valid' | 'invalid' | 'expired'
