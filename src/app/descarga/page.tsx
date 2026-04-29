@@ -100,7 +100,39 @@ function MaterialItem({ m }: { m: typeof MATERIALS[0] }) {
 
       {/* DROPDOWN MENU */}
       {expanded && (
-        <div style={{ padding: '16px 24px', borderTop: '1px solid #e8e4dc', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ padding: '16px 24px', borderTop: '1px solid #e8e4dc', display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <p style={{ fontSize: 13, color: '#7a7060', margin: '0 0 8px', lineHeight: 1.5 }}>
+            {m.subtitle}
+          </p>
+
+          <a
+            href={(m as any).html}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: 'rgba(244,122,32,0.1)',
+              color: '#F47A20',
+              border: 'none',
+              padding: '12px 16px',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: 14,
+              fontWeight: 600,
+              textAlign: 'left',
+              textDecoration: 'none',
+              display: 'block',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => {
+              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.2)'
+            }}
+            onMouseLeave={e => {
+              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.1)'
+            }}
+          >
+            🔗 Abrir recurso
+          </a>
+
           <button
             onClick={() => {
               const link = document.createElement('a')
@@ -162,34 +194,6 @@ function MaterialItem({ m }: { m: typeof MATERIALS[0] }) {
           >
             ⬇️ Descargar PDF
           </button>
-
-          <a
-            href={(m as any).html}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: 'rgba(244,122,32,0.1)',
-              color: '#F47A20',
-              border: 'none',
-              padding: '12px 16px',
-              borderRadius: 8,
-              cursor: 'pointer',
-              fontSize: 14,
-              fontWeight: 600,
-              textAlign: 'left',
-              textDecoration: 'none',
-              display: 'block',
-              transition: 'background 0.2s',
-            }}
-            onMouseEnter={e => {
-              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.2)'
-            }}
-            onMouseLeave={e => {
-              (e.target as HTMLElement).style.background = 'rgba(244,122,32,0.1)'
-            }}
-          >
-            🔗 Abrir recurso
-          </a>
         </div>
       )}
     </div>
