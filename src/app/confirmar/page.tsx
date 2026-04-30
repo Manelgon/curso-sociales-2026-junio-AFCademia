@@ -54,7 +54,7 @@ export default function ConfirmarPage() {
             Te hemos enviado un email de confirmación.
           </p>
           <p style={{ fontSize: 15, color: '#7a7060', lineHeight: 1.6, marginBottom: 32 }}>
-            Haz clic en el enlace del email para confirmar tu dirección y acceder inmediatamente a los <strong style={{ color: '#003F6B' }}>4 materiales de la charla</strong>.
+            Haz clic en el enlace del email para confirmar tu dirección y acceder inmediatamente a los <strong style={{ color: '#003F6B' }}>5 materiales de la charla</strong>.
           </p>
 
           {/* Steps */}
@@ -95,7 +95,7 @@ export default function ConfirmarPage() {
             lineHeight: 1.5,
           }}>
             ¿No lo ves? Revisa la carpeta de <strong>spam o promociones</strong>. Si aun así no llega, escríbenos a{' '}
-            <a href="mailto:hola@afcademia.com" style={{ color: '#003F6B', fontWeight: 600 }}>hola@afcademia.com</a>
+            <a href="mailto:cursos@afcademia.com" style={{ color: '#003F6B', fontWeight: 600 }}>cursos@afcademia.com</a>
           </div>
         </div>
       </div>

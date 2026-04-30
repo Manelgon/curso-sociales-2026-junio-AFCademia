@@ -74,11 +74,16 @@ export default function Home() {
   const [nombre, setNombre] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [privacyChecked, setPrivacyChecked] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || !nombre) {
       setError('Por favor rellena nombre y email.')
+      return
+    }
+    if (!privacyChecked) {
+      setError('Debes aceptar la política de protección de datos.')
       return
     }
     setError('')
@@ -305,18 +310,45 @@ export default function Home() {
               <p style={{ fontSize: 13, color: '#c0392b', textAlign: 'center' }}>{error}</p>
             )}
 
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 0' }}>
+              <input
+                type="checkbox"
+                id="privacy"
+                checked={privacyChecked}
+                onChange={e => setPrivacyChecked(e.target.checked)}
+                style={{
+                  width: 18,
+                  height: 18,
+                  cursor: 'pointer',
+                  marginTop: 2,
+                  flexShrink: 0,
+                }}
+              />
+              <label htmlFor="privacy" style={{ fontSize: 12, color: '#7a7060', lineHeight: 1.5, cursor: 'pointer' }}>
+                Acepto la{' '}
+                <a
+                  href="https://afcademia.com/privacidad#politica-privacidad-title"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#003F6B', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}
+                >
+                  política de protección de datos
+                </a>
+              </label>
+            </div>
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !privacyChecked}
               style={{
-                background: loading ? '#ccc' : '#F47A20',
+                background: (loading || !privacyChecked) ? '#ccc' : '#F47A20',
                 color: '#fff',
                 border: 'none',
                 borderRadius: 12,
                 padding: '16px 24px',
                 fontSize: 16,
                 fontWeight: 700,
-                cursor: loading ? 'not-allowed' : 'pointer',
+                cursor: (loading || !privacyChecked) ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
