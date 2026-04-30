@@ -135,12 +135,8 @@ function MaterialItem({ m }: { m: typeof MATERIALS[0] }) {
 
           <button
             onClick={() => {
-              const link = document.createElement('a')
-              link.href = (m as any).html
-              link.download = ((m as any).html.split('/').pop() || 'material').replace('.html', '')
-              document.body.appendChild(link)
-              link.click()
-              document.body.removeChild(link)
+              const fileName = ((m as any).html.split('/').pop() || 'material').replace('.html', '')
+              window.location.href = `/api/download?file=${encodeURIComponent(fileName + '.html')}`
             }}
             style={{
               background: '#F47A20',
@@ -166,12 +162,8 @@ function MaterialItem({ m }: { m: typeof MATERIALS[0] }) {
 
           <button
             onClick={() => {
-              const link = document.createElement('a')
-              link.href = (m as any).pdf
-              link.download = ((m as any).pdf.split('/').pop() || 'material')
-              document.body.appendChild(link)
-              link.click()
-              document.body.removeChild(link)
+              const fileName = (m as any).pdf.split('/').pop() || 'material'
+              window.location.href = `/api/download?file=${encodeURIComponent(fileName)}`
             }}
             style={{
               background: '#003F6B',
