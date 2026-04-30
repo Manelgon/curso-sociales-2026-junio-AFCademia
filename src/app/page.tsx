@@ -98,6 +98,8 @@ export default function Home() {
             nombre,
             email,
             source: 'Charla AFC Cantabria',
+            privacy_accepted: privacyChecked,
+            privacy_accepted_at: new Date().toISOString(),
           },
           { onConflict: 'email', ignoreDuplicates: false }
         )
