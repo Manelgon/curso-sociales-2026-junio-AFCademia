@@ -643,11 +643,9 @@ section.slide.orange{background:linear-gradient(165deg,#F47A20 0%,#D9610A 100%);
   <div class="s-body">
     <span class="eyebrow">Nodo 1 · Trigger</span>
     <h2 class="title md">Cuando llegue un <em>email</em>…</h2>
-    <div class="two-col" style="margin-top:48px">
-      <div>
-        <p class="lead" style="font-size:26px;margin-bottom:32px">El primer nodo es el <strong style="color:var(--afc-blue-deep)">cuándo</strong> del escenario. La condición que lo despierta.</p>
-        <div class="card"><span class="kicker">CONFIGURACIÓN</span><h3>Watch emails</h3><p><strong>Folder:</strong> Inbox<br/><strong>Mark as read:</strong> No leído<br/><strong>Filter:</strong> newer_than:1d<br/><strong>Limit:</strong> 10</p></div>
-      </div>
+    <p class="lead" style="font-size:26px;margin-top:24px">El primer nodo es el <strong style="color:var(--afc-blue-deep)">cuándo</strong> del escenario. La condición que lo despierta.</p>
+    <div class="two-col" style="margin-top:32px;align-items:center;flex:0">
+      <div class="card"><span class="kicker">CONFIGURACIÓN</span><h3>Watch emails</h3><p><strong>Folder:</strong> Inbox<br/><strong>Mark as read:</strong> No leído<br/><strong>Filter:</strong> newer_than:1d<br/><strong>Limit:</strong> 10</p></div>
       <div class="email-mock">
         <span class="tag">📥 Bandeja de entrada</span>
         <div class="from">De: <b><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f424e5d465c4e0143405f4a556f48424e4643014c4042">[email&#160;protected]</a></b> · 11:47</div>
@@ -696,22 +694,18 @@ section.slide.orange{background:linear-gradient(165deg,#F47A20 0%,#D9610A 100%);
   <div class="s-body">
     <span class="eyebrow">El prompt clasificador</span>
     <h2 class="title md">Le decimos a la IA <em>exactamente</em> qué queremos.</h2>
-    <div class="codeblock" style="margin-top:32px;font-size:20px">
+    <div class="codeblock" style="margin-top:24px;font-size:20px;padding:20px 36px;line-height:1.5">
 <span class="c">// Eres un asistente de un despacho de administración de fincas.</span>
 <span class="c">// Clasifica el siguiente email en una de estas categorías:</span>
-
 <span class="k">categorias</span>: [<span class="s">"contabilidad"</span>, <span class="s">"incidencias"</span>, <span class="s">"jurídico"</span>, <span class="s">"documentación"</span>, <span class="s">"otros"</span>]
-
 <span class="c">// Indica también si requiere respuesta humana (true/false).</span>
 <span class="c">// Devuelve SOLO un objeto JSON con esta estructura:</span>
-
 {
   <span class="k">"categoria"</span>: <span class="s">"..."</span>,
   <span class="k">"prioridad"</span>: <span class="s">"alta | media | baja"</span>,
   <span class="k">"responder"</span>: <span class="s">true | false</span>,
   <span class="k">"resumen"</span>: <span class="s">"máximo 80 caracteres"</span>
 }
-
 <span class="c">// EMAIL A CLASIFICAR:</span>
 <span class="c">// {{1.subject}}</span>
 <span class="c">// {{1.text_content}}</span>
@@ -863,7 +857,6 @@ section.slide.orange{background:linear-gradient(165deg,#F47A20 0%,#D9610A 100%);
     <h2 class="title">Ya tienes tu escenario<br/><em>funcionando</em>.</h2>
     <div class="end-stack" style="margin-top:64px">
       <p class="lead" style="font-size:28px;max-width:900px">El siguiente paso es tuyo: escanea el QR y descarga el <strong style="color:white">manual</strong>, el <strong style="color:white">cuaderno</strong> y los <strong style="color:white">prompts</strong>.</p>
-      <span class="cta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a293f383925390a2b2c292b2e2f27232b64292527">[email&#160;protected]</a></span>
     </div>
   </div>
   <div class="qr-block">
