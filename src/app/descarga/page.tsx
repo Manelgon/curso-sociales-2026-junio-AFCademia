@@ -436,9 +436,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
     <main style={{ background: '#faf9f5', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
       <header style={{ background: '#003F6B', padding: '16px 24px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F47A20" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
+          <img src="/logo-afcademia.webp" alt="AFCademía" width={34} height={34} style={{ background: '#fff', borderRadius: 8, padding: 4 }} />
           <span style={{ color: '#fff', fontWeight: 800, fontSize: 17 }}>AFC<span style={{ color: '#F47A20' }}>ademia</span></span>
         </div>
       </header>

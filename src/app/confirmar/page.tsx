@@ -10,9 +10,7 @@ export default function ConfirmarPage() {
       {/* HEADER */}
       <header style={{ background: '#003F6B', padding: '16px 24px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F47A20" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
+          <img src="/logo-afcademia.webp" alt="AFCademía" width={36} height={36} style={{ background: '#fff', borderRadius: 8, padding: 4 }} />
           <span style={{ color: '#fff', fontWeight: 800, fontSize: 18, letterSpacing: '-0.5px' }}>AFC<span style={{ color: '#F47A20' }}>ademia</span></span>
         </div>
       </header>

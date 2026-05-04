@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: 'Charla AFC Cantabria - Automatización de Emails con IA | AFCademía',
   description: 'Acceso a los materiales exclusivos de la charla sobre automatización de emails con IA para administradores de fincas. Manual, prácticas, diapositivas, cheatsheet y prompts listos para usar.',
   keywords: 'automatización, email, IA, AFC, Cantabria, administradores de fincas, Make.com',
+  icons: {
+    icon: '/logo-afcademia.webp',
+    shortcut: '/logo-afcademia.webp',
+    apple: '/logo-afcademia.webp',
+  },
   openGraph: {
     title: 'Charla AFC Cantabria - Automatización con IA',
     description: 'Tus 5 materiales exclusivos: Manual, Prácticas, Diapositivas, Cheatsheet y Prompts de IA.',
