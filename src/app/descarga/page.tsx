@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import Footer from '@/shared/components/Footer'
 
 const MATERIALS = [
   {
@@ -441,9 +442,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       {children}
-      <footer style={{ borderTop: '1px solid #e8e4dc', padding: '20px', textAlign: 'center' }}>
-        <p style={{ fontSize: 12, color: '#aaa8a0' }}>© 2026 AFCademIA</p>
-      </footer>
+      <Footer />
     </main>
   )
 }

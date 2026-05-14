@@ -1,3 +1,5 @@
+import Footer from '@/shared/components/Footer'
+
 export default function ConfirmarPage() {
   return (
     <main style={{
@@ -98,9 +100,7 @@ export default function ConfirmarPage() {
         </div>
       </div>
 
-      <footer style={{ borderTop: '1px solid #e8e4dc', padding: '20px', textAlign: 'center' }}>
-        <p style={{ fontSize: 12, color: '#aaa8a0' }}>© 2026 AFCademIA</p>
-      </footer>
+      <Footer />
     </main>
   )
 }

@@ -20,3 +20,233 @@ input:focus {
   border-color: #003F6B !important;
   box-shadow: 0 0 0 3px rgba(0, 63, 107, 0.12);
 }
+
+/* Deliverables grid: 3+2 desktop, 2 cols tablet, 1 col mobile */
+@media (max-width: 768px) {
+  .deliverables-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .deliverables-grid > div {
+    grid-column: auto !important;
+  }
+}
+@media (max-width: 480px) {
+  .deliverables-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ========================================
+   Footer (réplica del sitio principal AFCademIA)
+   ======================================== */
+:root {
+  --afc-azul-oscuro: #003865;
+  --afc-naranja-vibrante: #F37321;
+  --afc-blanco: #FFFFFF;
+  --afc-spacing-sm: 1rem;
+  --afc-spacing-md: 2rem;
+  --afc-spacing-lg: 4rem;
+  --afc-transition-fast: 0.2s ease;
+  --afc-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.footer {
+  background: var(--afc-azul-oscuro);
+  color: var(--afc-blanco);
+  padding: var(--afc-spacing-lg) 0 var(--afc-spacing-md);
+  font-family: var(--afc-font);
+  line-height: 1.6;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr 2fr;
+  gap: 2rem;
+  margin: 0 auto var(--afc-spacing-md) auto;
+  width: 100%;
+  max-width: 1400px;
+  align-items: start;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.footer-section h3 {
+  margin-bottom: var(--afc-spacing-sm);
+}
+
+.footer-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--afc-blanco);
+  margin: 0 0 var(--afc-spacing-sm);
+}
+
+.footer-logo span {
+  color: var(--afc-naranja-vibrante);
+}
+
+.footer-section p {
+  opacity: 0.9;
+  margin-bottom: var(--afc-spacing-sm);
+  text-align: justify;
+  color: var(--afc-blanco);
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-social a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--afc-blanco);
+  text-decoration: none;
+  transition: var(--afc-transition-fast);
+}
+
+.footer-social a:hover {
+  background: var(--afc-naranja-vibrante);
+  transform: translateY(-3px);
+}
+
+.footer-section h4 {
+  font-size: 1.15rem;
+  margin: 0 0 1rem;
+  color: var(--afc-naranja-vibrante);
+  font-weight: 700;
+}
+
+.footer-links,
+.footer-contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: var(--afc-transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--afc-naranja-vibrante);
+  padding-left: 5px;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-contact i,
+.footer-contact .icon {
+  color: var(--afc-naranja-vibrante);
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer-contact a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: var(--afc-transition-fast);
+}
+
+.footer-contact a:hover {
+  color: var(--afc-naranja-vibrante);
+}
+
+.footer-copyright {
+  margin-top: var(--afc-spacing-sm);
+  text-align: center;
+}
+
+.footer-copyright p {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.desktop-copyright {
+  display: block;
+}
+
+.mobile-copyright {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-section {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-section h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .footer-links,
+  .footer-contact {
+    text-align: center;
+  }
+
+  .footer-contact li {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+
+  .footer-section p {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .desktop-copyright {
+    display: none;
+  }
+
+  .mobile-copyright {
+    display: block;
+  }
+}

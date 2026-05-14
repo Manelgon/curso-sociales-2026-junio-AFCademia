@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import Footer from '@/shared/components/Footer'
 
 const DELIVERABLES = [
   {
@@ -90,16 +91,19 @@ export default function Home() {
     setLoading(true)
 
     try {
-      // 1. Insertar o recuperar lead (upsert por email)
+      const now = new Date().toISOString()
+      const NOMBRE_FLUJO = 'materiales-charla-cantabria-2026'
+
+      // 1. Upsert lead por email (actualiza nombre y privacidad si ya existía)
       const { data: leadData, error: leadError } = await supabase
         .from('leads')
         .upsert(
           {
             nombre,
             email,
-            source: 'Charla AFC Cantabria',
+            source: 'Charla AFC Cantabria 2026',
             privacy_accepted: privacyChecked,
-            privacy_accepted_at: new Date().toISOString(),
+            privacy_accepted_at: now,
           },
           { onConflict: 'email', ignoreDuplicates: false }
         )
@@ -107,42 +111,71 @@ export default function Home() {
         .single()
 
       if (leadError) throw leadError
-
       const leadId = leadData.id
 
-      // 2. Insertar flujo_embudo con etiqueta de la charla
+      // 2. Upsert flujo_embudo: única fila por (lead_id, nombre_flujo)
+      //    Detectamos si es la primera vez para etiquetarlo como 'nuevo' o 'recurrente'.
+      const { data: existingFlujo, error: existingFlujoError } = await supabase
+        .from('flujos_embudo')
+        .select('id')
+        .eq('lead_id', leadId)
+        .eq('nombre_flujo', NOMBRE_FLUJO)
+        .maybeSingle()
+
+      if (existingFlujoError) throw existingFlujoError
+
+      const isFirstTime = !existingFlujo
+      const tagsProceso = isFirstTime
+        ? ['nuevo', 'charla-cantabria-2026', 'automatiza-email']
+        : ['recurrente', 'charla-cantabria-2026', 'automatiza-email']
+
       const { error: flujoError } = await supabase
         .from('flujos_embudo')
-        .insert({
-          lead_id: leadId,
-          nombre_flujo: 'charla-afc-cantabria',
-          status_actual: 'nuevo',
-          actividad: 'lead_activo',
-          tags_proceso: ['charla-cantabria-2026', 'automatiza-email'],
-          fecha_ultima_interaccion: new Date().toISOString(),
-        })
-
-      if (flujoError && flujoError.code !== '23505') throw flujoError
-
-      // 3. Generar token de descarga
-      const { data: tokenData, error: tokenError } = await supabase
-        .from('access_tokens')
-        .insert({
-          lead_id: leadId,
-          tipo: 'descarga',
-          metadata: {
-            fuente: 'charla-afc-cantabria',
-            evento: 'Automatiza tu email - AFC Cantabria 2026',
-            nombre,
-            email,
+        .upsert(
+          {
+            lead_id: leadId,
+            nombre_flujo: NOMBRE_FLUJO,
+            status_actual: isFirstTime ? 'nuevo' : 'recurrente',
+            actividad: 'lead_activo',
+            tags_proceso: tagsProceso,
+            fecha_ultima_interaccion: now,
           },
-        })
+          { onConflict: 'lead_id,nombre_flujo', ignoreDuplicates: false }
+        )
+
+      if (flujoError) throw flujoError
+
+      // 3. Reutilizar access_token activo si existe, sino crear uno nuevo.
+      //    "Activo" = no usado y no caducado.
+      const { data: existingToken, error: existingTokenError } = await supabase
+        .from('access_tokens')
         .select('token')
-        .single()
+        .eq('lead_id', leadId)
+        .eq('tipo', 'descarga')
+        .or('used.is.null,used.eq.false')
+        .or(`expires_at.is.null,expires_at.gt.${now}`)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
 
-      if (tokenError) throw tokenError
+      if (existingTokenError) throw existingTokenError
 
-      const downloadToken = tokenData.token
+      if (!existingToken) {
+        const { error: tokenError } = await supabase
+          .from('access_tokens')
+          .insert({
+            lead_id: leadId,
+            tipo: 'descarga',
+            metadata: {
+              fuente: NOMBRE_FLUJO,
+              evento: 'Automatiza tu email - AFC Cantabria 2026',
+              nombre,
+              email,
+            },
+          })
+
+        if (tokenError) throw tokenError
+      }
 
       // n8n es notificado automáticamente via trigger de Supabase
       window.location.href = '/confirmar'
@@ -171,13 +204,6 @@ export default function Home() {
         <div style={{ position: 'absolute', bottom: -80, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-          <img
-            src="/logo-afcademia.webp"
-            alt="AFCademía"
-            width={88}
-            height={88}
-            style={{ background: '#fff', borderRadius: 20, padding: 10, marginBottom: 24, boxShadow: '0 12px 32px rgba(0,0,0,0.25)', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
-          />
           <div style={{
             display: 'inline-block',
             background: 'rgba(244,122,32,0.2)',
@@ -201,7 +227,7 @@ export default function Home() {
 
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.6, marginBottom: 12 }}>
             Introduce tu email y te los enviamos al instante.<br />
-            <strong style={{ color: '#fff' }}>4 recursos</strong> para que puedas aplicar lo de hoy desde mañana.
+            <strong style={{ color: '#fff' }}>5 recursos</strong> para que puedas aplicar lo de hoy desde mañana.
           </p>
         </div>
       </section>
@@ -209,31 +235,23 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <section style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px 80px', transform: 'translateY(-40px)' }}>
 
-        {/* Deliverables grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 40 }}>
-          {DELIVERABLES.map((d) => (
-            <div key={d.num} style={{
-              background: '#fff',
-              border: '1px solid #e8e4dc',
-              borderRadius: 16,
-              padding: 24,
-              boxShadow: '0 2px 12px rgba(0,63,107,0.06)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 12,
-            }}>
-              <div style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: 'rgba(244,122,32,0.1)',
+        {/* Deliverables grid: 3+2 layout en desktop, responsive abajo */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 16, marginBottom: 40 }} className="deliverables-grid">
+          {DELIVERABLES.map((d, i) => (
+            <div
+              key={d.num}
+              style={{
+                background: '#fff',
+                border: '1px solid #e8e4dc',
+                borderRadius: 16,
+                padding: 24,
+                boxShadow: '0 2px 12px rgba(0,63,107,0.06)',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#F47A20',
-              }}>
-                {d.icon}
-              </div>
+                flexDirection: 'column',
+                gap: 12,
+                gridColumn: i < 3 ? 'span 2' : (i === 3 ? '2 / span 2' : '4 / span 2'),
+              }}
+            >
               <div>
                 <div style={{ fontSize: 11, fontWeight: 700, color: '#F47A20', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>
                   {d.tag}
@@ -256,9 +274,8 @@ export default function Home() {
           boxShadow: '0 8px 40px rgba(0,63,107,0.12)',
         }}>
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>📥</div>
             <h2 style={{ fontSize: 22, fontWeight: 800, color: '#003F6B', marginBottom: 8 }}>
-              Accede a los 4 materiales gratis
+              Accede a los 5 materiales gratis
             </h2>
             <p style={{ fontSize: 14, color: '#7a7060' }}>
               Te enviamos un email de confirmación. Al confirmar, accedes a todos los recursos.
@@ -381,12 +398,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ borderTop: '1px solid #e8e4dc', padding: '24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 12, color: '#aaa8a0' }}>
-          © 2026 AFCademIA · <a href="#" style={{ color: '#aaa8a0' }}>Privacidad</a>
-        </p>
-      </footer>
+      <Footer />
     </main>
   )
 }
