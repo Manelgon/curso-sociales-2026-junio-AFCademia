@@ -9,9 +9,9 @@ export default function Footer() {
               AFCadem<span>IA</span>
             </h3>
             <p>
-              La academia tecnológica para administradores de fincas. Aprende a automatizar
-              procesos reales, optimizar tu tiempo y liderar la era digital en la gestión de
-              comunidades.
+              La academia tecnológica para profesionales jurídico-laborales. Aprende a aplicar
+              IA con criterio en tu despacho, ahorrar horas en gestión y mantener tu
+              responsabilidad profesional.
             </p>
             <div className="footer-social">
               <a

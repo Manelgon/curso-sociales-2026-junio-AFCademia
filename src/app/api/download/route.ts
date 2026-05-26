@@ -12,16 +12,14 @@ export async function GET(request: NextRequest) {
 
   // Whitelist de archivos permitidos
   const allowedFiles = [
-    '01 Manual del Alumno.html',
-    '02 Cuaderno de Practicas.html',
-    '03 Diapositivas.html',
-    '04 Cheatsheet.html',
-    '05 Plantillas Prompts.html',
-    'Manual del Alumno · Construye tu automatización paso a paso · AFCademIA.pdf',
-    'Cuaderno de prácticas · AFCademIA.pdf',
-    'Diapositivas · Automatización emails con IA · AFCademIA.pdf',
-    'Cheatsheet · Make.com + IA · AFCademIA.pdf',
-    'Plantillas de prompts · AFCademIA.pdf',
+    'Diapositivas.html',
+    'Folleto del asistente.html',
+    '10 Prompts esenciales.html',
+    'Tarjeta A5.html',
+    'Diapositivas.pdf',
+    'Folleto del asistente.pdf',
+    '10 Prompts esenciales.pdf',
+    'Tarjeta A5.pdf',
   ]
 
   if (!allowedFiles.includes(file)) {

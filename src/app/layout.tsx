@@ -5,33 +5,33 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] })
 
 export const metadata: Metadata = {
-  title: 'Charla AFC Cantabria - Automatización de Emails con IA | AFCademía',
-  description: 'Acceso a los materiales exclusivos de la charla sobre automatización de emails con IA para administradores de fincas. Manual, prácticas, diapositivas, cheatsheet y prompts listos para usar.',
-  keywords: 'automatización, email, IA, AFC, Cantabria, administradores de fincas, Make.com',
+  title: 'IA aplicada al sector jurídico-laboral · Málaga 16 jun 2026 | AFCademIA',
+  description: 'Materiales de la ponencia de Roberto Díaz en el Colegio GS Málaga y Melilla: diapositivas, folleto del asistente, 10 prompts esenciales y tarjeta A5 de referencia rápida.',
+  keywords: 'IA, jurídico, laboral, graduados sociales, Málaga, Roberto Díaz, AFCademIA, prompts, RGPD',
   icons: {
     icon: '/logo-afcademia.webp',
     shortcut: '/logo-afcademia.webp',
     apple: '/logo-afcademia.webp',
   },
   openGraph: {
-    title: 'Charla AFC Cantabria - Automatización con IA',
-    description: 'Tus 5 materiales exclusivos: Manual, Prácticas, Diapositivas, Cheatsheet y Prompts de IA.',
+    title: 'IA aplicada al sector jurídico-laboral · AFCademIA',
+    description: 'Tus 4 materiales de la ponencia: diapositivas, folleto A4, 10 prompts esenciales y tarjeta A5.',
     type: 'website',
-    url: 'https://afcademia.com',
-    siteName: 'AFCademía',
+    url: 'https://graduadossociales2026.afcademia.com',
+    siteName: 'AFCademIA',
     images: [
       {
         url: 'https://afcademia.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AFCademía - Automatización de Emails con IA',
+        alt: 'AFCademIA - IA aplicada al sector jurídico-laboral',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Charla AFC Cantabria - Automatización con IA',
-    description: 'Tus 5 materiales exclusivos listos para descargar',
+    title: 'IA aplicada al sector jurídico-laboral · AFCademIA',
+    description: 'Tus 4 materiales de la ponencia listos para descargar',
     creator: '@AFCademia',
   },
 }
