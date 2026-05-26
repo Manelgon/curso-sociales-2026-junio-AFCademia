@@ -7,66 +7,27 @@ import Footer from '@/shared/components/Footer'
 const DELIVERABLES = [
   {
     num: '01',
-    title: 'Manual del Alumno',
-    desc: 'Guía completa paso a paso para construir tu primera automatización de email desde cero.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-      </svg>
-    ),
-    tag: 'PDF Guía',
+    title: 'Diapositivas de la ponencia',
+    desc: '33 slides en 16:9 para proyectar. QR a materiales, divisores por bloque, prompts y bonus hacia automatizaciones.',
+    tag: 'Proyección',
   },
   {
     num: '02',
-    title: 'Cuaderno de Prácticas',
-    desc: 'Ejercicios y plantillas para que practiques y consolides lo aprendido en la charla.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-      </svg>
-    ),
-    tag: 'Ejercicios',
+    title: 'Folleto del asistente',
+    desc: '9 páginas A4 con fundamentos, herramientas, casos de uso, 3 prompts, RGPD y plan de acción. Print-ready.',
+    tag: 'Imprimible A4',
   },
   {
     num: '03',
-    title: 'Diapositivas de la Charla',
-    desc: 'Todas las diapositivas de la sesión de hoy para que puedas repasar el contenido cuando quieras.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <line x1="8" y1="21" x2="16" y2="21"/>
-        <line x1="12" y1="17" x2="12" y2="21"/>
-      </svg>
-    ),
-    tag: 'Presentación',
+    title: '10 prompts esenciales',
+    desc: '5 prompts jurídicos + 5 de gestión, listos para copiar, con tips de verificación. Claude · ChatGPT · Perplexity.',
+    tag: 'Post-ponencia',
   },
   {
     num: '04',
-    title: 'Cheatsheet Make.com + IA',
-    desc: 'Hoja de referencia rápida con los módulos, conexiones y prompts más usados. Tenla siempre a mano.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-      </svg>
-    ),
-    tag: 'Referencia rápida',
-  },
-  {
-    num: '05',
-    title: 'Plantillas de Prompts',
-    desc: 'Los 3 prompts listos para copiar y pegar en Make. Adaptables a tu despacho.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <path d="M9 13h6M9 17h4"/>
-      </svg>
-    ),
-    tag: 'Prompts IA',
+    title: 'Tarjeta A5 · referencia rápida',
+    desc: 'Doble cara con lo esencial: QR a materiales, las 5 IAs, verticales, RGPD, fórmula del prompt y la frase del curso.',
+    tag: 'Imprimible A5',
   },
 ]
 
@@ -92,7 +53,7 @@ export default function Home() {
 
     try {
       const now = new Date().toISOString()
-      const NOMBRE_FLUJO = 'materiales-charla-cantabria-2026'
+      const NOMBRE_FLUJO = 'curso-sociales-2026-junio'
 
       // 1. Upsert lead por email (actualiza nombre y privacidad si ya existía)
       const { data: leadData, error: leadError } = await supabase
@@ -101,7 +62,7 @@ export default function Home() {
           {
             nombre,
             email,
-            source: 'Charla AFC Cantabria 2026',
+            source: 'Curso Sociales 2026 · Junio · Málaga',
             privacy_accepted: privacyChecked,
             privacy_accepted_at: now,
           },
@@ -126,8 +87,8 @@ export default function Home() {
 
       const isFirstTime = !existingFlujo
       const tagsProceso = isFirstTime
-        ? ['nuevo', 'charla-cantabria-2026', 'automatiza-email']
-        : ['recurrente', 'charla-cantabria-2026', 'automatiza-email']
+        ? ['nuevo', 'cursos-sociales-2026', 'junio-2026', 'ia-juridico-laboral']
+        : ['recurrente', 'cursos-sociales-2026', 'junio-2026', 'ia-juridico-laboral']
 
       const { error: flujoError } = await supabase
         .from('flujos_embudo')
@@ -168,7 +129,7 @@ export default function Home() {
             tipo: 'descarga',
             metadata: {
               fuente: NOMBRE_FLUJO,
-              evento: 'Automatiza tu email - AFC Cantabria 2026',
+              evento: 'IA aplicada al sector jurídico-laboral · Málaga 16 jun 2026',
               nombre,
               email,
             },
@@ -217,17 +178,17 @@ export default function Home() {
             borderRadius: 100,
             marginBottom: 24,
           }}>
-            Materiales exclusivos · Charla AFC Cantabria
+            Materiales · Ponencia 16 jun 2026 · Málaga
           </div>
 
           <h1 style={{ color: '#fff', fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 900, lineHeight: 1.1, marginBottom: 20, letterSpacing: '-1px' }}>
-            Tus materiales de la charla<br />
-            <span style={{ color: '#F47A20' }}>te esperan aquí</span>
+            IA aplicada al sector<br />
+            <span style={{ color: '#F47A20' }}>jurídico-laboral</span>
           </h1>
 
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.6, marginBottom: 12 }}>
-            Introduce tu email y te los enviamos al instante.<br />
-            <strong style={{ color: '#fff' }}>5 recursos</strong> para que puedas aplicar lo de hoy desde mañana.
+            Introduce tu email y te enviamos los materiales al instante.<br />
+            <strong style={{ color: '#fff' }}>4 recursos</strong> para aplicar lo de hoy desde mañana en tu despacho.
           </p>
         </div>
       </section>
@@ -236,8 +197,8 @@ export default function Home() {
       <section style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px 80px', transform: 'translateY(-40px)' }}>
 
         {/* Deliverables grid: 3+2 layout en desktop, responsive abajo */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 16, marginBottom: 40 }} className="deliverables-grid">
-          {DELIVERABLES.map((d, i) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginBottom: 40 }} className="deliverables-grid">
+          {DELIVERABLES.map((d) => (
             <div
               key={d.num}
               style={{
@@ -249,7 +210,6 @@ export default function Home() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 12,
-                gridColumn: i < 3 ? 'span 2' : (i === 3 ? '2 / span 2' : '4 / span 2'),
               }}
             >
               <div>
@@ -275,7 +235,7 @@ export default function Home() {
         }}>
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
             <h2 style={{ fontSize: 22, fontWeight: 800, color: '#003F6B', marginBottom: 8 }}>
-              Accede a los 5 materiales gratis
+              Accede a los 4 materiales gratis
             </h2>
             <p style={{ fontSize: 14, color: '#7a7060' }}>
               Te enviamos un email de confirmación. Al confirmar, accedes a todos los recursos.

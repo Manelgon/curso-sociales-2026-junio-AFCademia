@@ -8,43 +8,35 @@ import Footer from '@/shared/components/Footer'
 const MATERIALS = [
   {
     num: '01',
-    title: 'Manual del Alumno',
-    subtitle: 'Construye tu automatización paso a paso',
-    html: '/01 Manual del Alumno.html',
-    pdf: '/Manual del Alumno · Construye tu automatización paso a paso · AFCademIA.pdf',
-    tag: 'PDF Guía',
+    title: 'Diapositivas de la ponencia',
+    subtitle: '33 slides 16:9 · IA aplicada al sector jurídico-laboral',
+    html: '/01 Diapositivas Ponencia.html',
+    pdf: '/Diapositivas · IA jurídico-laboral · AFCademIA.pdf',
+    tag: 'Proyección',
   },
   {
     num: '02',
-    title: 'Cuaderno de Prácticas',
-    subtitle: 'Ejercicios para consolidar lo aprendido',
-    html: '/02 Cuaderno de Practicas.html',
-    pdf: '/Cuaderno de prácticas · AFCademIA.pdf',
-    tag: 'Ejercicios',
+    title: 'Folleto del asistente',
+    subtitle: 'Imprimible A4 · 9 páginas · print-ready',
+    html: '/02 Folleto Asistente.html',
+    pdf: '/Folleto del asistente · IA jurídico-laboral · AFCademIA.pdf',
+    tag: 'Imprimible A4',
   },
   {
     num: '03',
-    title: 'Diapositivas de la Charla',
-    subtitle: 'Automatización emails con IA',
-    html: '/03 Diapositivas.html',
-    pdf: '/Diapositivas · Automatización emails con IA · AFCademIA.pdf',
-    tag: 'Presentación',
+    title: '10 prompts esenciales',
+    subtitle: '5 jurídicos + 5 de gestión · Claude · ChatGPT · Perplexity',
+    html: '/03 10 Prompts Esenciales.html',
+    pdf: '/10 prompts esenciales · IA jurídico-laboral · AFCademIA.pdf',
+    tag: 'Post-ponencia',
   },
   {
     num: '04',
-    title: 'Cheatsheet Make.com + IA',
-    subtitle: 'Referencia rápida siempre a mano',
-    html: '/04 Cheatsheet.html',
-    pdf: '/Cheatsheet · Make.com + IA · AFCademIA.pdf',
-    tag: 'Referencia rápida',
-  },
-  {
-    num: '05',
-    title: 'Plantillas de Prompts',
-    subtitle: 'Los 3 prompts listos para copiar y pegar',
-    html: '/05 Plantillas Prompts.html',
-    pdf: '/Plantillas de prompts · AFCademIA.pdf',
-    tag: 'Prompts IA',
+    title: 'Tarjeta A5 · referencia rápida',
+    subtitle: 'Doble cara · para llevar en la cartera',
+    html: '/04 Tarjeta A5.html',
+    pdf: '/Tarjeta A5 referencia rápida · IA jurídico-laboral · AFCademIA.pdf',
+    tag: 'Imprimible A5',
   },
 ]
 
@@ -336,7 +328,7 @@ function DescargaContent() {
             {nombre ? `¡Hola ${nombre.split(' ')[0]}!` : '¡Acceso confirmado!'} Aquí tienes tus materiales
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 16, lineHeight: 1.5 }}>
-            Todo lo que necesitas para empezar a automatizar tus emails desde mañana.
+            Todo lo que necesitas para aplicar la IA en tu despacho desde mañana — con criterio profesional.
           </p>
         </div>
       </section>
@@ -373,16 +365,16 @@ function DescargaContent() {
             </div>
 
             <h2 style={{ color: '#fff', fontSize: 'clamp(20px, 3.5vw, 32px)', fontWeight: 900, marginBottom: 14, lineHeight: 1.2 }}>
-              Domina la automatización con IA en profundidad
+              El siguiente paso: automatizar tu despacho con IA
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 15, lineHeight: 1.7, marginBottom: 24 }}>
-              La charla de hoy ha sido solo el aperitivo. En AFCademIA tienes el curso completo para
-              administradores de fincas: flujos reales de automatización, gestión de incidencias,
-              comunicaciones con propietarios — todo con IA y sin código.
+              La ponencia de hoy ha sido solo el aperitivo. En AFCademIA tienes el curso completo para
+              graduados sociales: BOE filtrado cada mañana, triage de correo, plantillas de escritos,
+              jurisprudencia con citas verificables — todo con IA y sin código.
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 12, marginBottom: 28 }}>
-              {['Flujos completos de automatización', 'Casos reales de fincas', 'Comunidad de administradores', 'Actualizaciones incluidas'].map(b => (
+              {['Flujos jurídicos y de gestión', 'Casos reales de despacho', 'Comunidad de graduados sociales', 'Actualizaciones incluidas'].map(b => (
                 <div key={b} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F47A20" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
                   <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 14 }}>{b}</span>
