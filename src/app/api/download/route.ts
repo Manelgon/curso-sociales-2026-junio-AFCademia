@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'File parameter required' }, { status: 400 })
   }
 
-  // Whitelist de archivos permitidos
   const allowedFiles = [
     'Diapositivas.html',
     'Folleto del asistente.html',
@@ -32,12 +31,11 @@ export async function GET(request: NextRequest) {
 
     const isHtml = file.endsWith('.html')
     const contentType = isHtml ? 'text/html; charset=utf-8' : 'application/pdf'
-    const fileName = file.split('/').pop() || 'download'
 
     return new NextResponse(fileContent, {
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `attachment; filename="${fileName}"`,
+        'Content-Disposition': `attachment; filename="${file}"`,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       },
     })
