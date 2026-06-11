@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
 import Footer from '@/shared/components/Footer'
 
 const MATERIALS = [
@@ -200,36 +199,18 @@ function DescargaContent() {
   }, [token])
 
   const verifyToken = async (t: string) => {
-    const { data, error } = await supabase
-      .from('access_tokens')
-      .select('id, used, expires_at, leads(nombre)')
-      .eq('token', t)
-      .eq('tipo', 'descarga')
-      .single()
-
-    if (error || !data) {
+    try {
+      const res = await fetch('/api/verify-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: t }),
+      })
+      const data = (await res.json()) as { status: Status; nombre?: string }
+      if (data.nombre) setNombre(data.nombre)
+      setStatus(data.status ?? 'invalid')
+    } catch {
       setStatus('invalid')
-      return
     }
-
-    if (new Date(data.expires_at) < new Date()) {
-      setStatus('expired')
-      return
-    }
-
-    // Guardar nombre del lead
-    const lead = data.leads as unknown as { nombre: string } | null
-    if (lead?.nombre) setNombre(lead.nombre)
-
-    // Marcar como usado (sin bloquear el acceso si ya fue usado — UX mejor)
-    if (!data.used) {
-      await supabase
-        .from('access_tokens')
-        .update({ used: true })
-        .eq('id', data.id)
-    }
-
-    setStatus('valid')
   }
 
   if (status === 'loading') {

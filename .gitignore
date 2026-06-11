@@ -55,6 +55,7 @@ Thumbs.db
 .LSOverride
 
 # Claude Code
+.claude/scheduled_tasks.lock
 .claude/skills/**/node_modules
 .claude/plugins
 *.mcp.json

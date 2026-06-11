@@ -126,7 +126,7 @@ export default function Footer() {
             <ul className="footer-links">
               <li>
                 <a
-                  href="https://afcademia.com/aviso-legal#aviso-legal-title"
+                  href="https://afcademia.com/aviso-legal/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -135,7 +135,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://afcademia.com/privacidad#politica-privacidad-title"
+                  href="https://afcademia.com/politica-de-privacidad/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -144,7 +144,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://afcademia.com/cookies#politica-cookies-title"
+                  href="https://afcademia.com/politica-de-cookies/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

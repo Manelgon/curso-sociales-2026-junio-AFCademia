@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
 import Footer from '@/shared/components/Footer'
 
 const DELIVERABLES = [
@@ -52,97 +51,17 @@ export default function Home() {
     setLoading(true)
 
     try {
-      const now = new Date().toISOString()
-      const NOMBRE_FLUJO = 'curso-sociales-2026-junio'
-
-      // 1. Upsert lead por email (actualiza nombre y privacidad si ya existía)
-      const { data: leadData, error: leadError } = await supabase
-        .from('leads')
-        .upsert(
-          {
-            nombre,
-            email,
-            source: 'Curso Sociales 2026 · Junio · Málaga',
-            privacy_accepted: privacyChecked,
-            privacy_accepted_at: now,
-          },
-          { onConflict: 'email', ignoreDuplicates: false }
-        )
-        .select('id')
-        .single()
-
-      if (leadError) throw leadError
-      const leadId = leadData.id
-
-      // 2. Upsert flujo_embudo: única fila por (lead_id, nombre_flujo)
-      //    Detectamos si es la primera vez para etiquetarlo como 'nuevo' o 'recurrente'.
-      const { data: existingFlujo, error: existingFlujoError } = await supabase
-        .from('flujos_embudo')
-        .select('id')
-        .eq('lead_id', leadId)
-        .eq('nombre_flujo', NOMBRE_FLUJO)
-        .maybeSingle()
-
-      if (existingFlujoError) throw existingFlujoError
-
-      const isFirstTime = !existingFlujo
-      const tagsProceso = isFirstTime
-        ? ['nuevo', 'cursos-sociales-2026', 'junio-2026', 'ia-juridico-laboral']
-        : ['recurrente', 'cursos-sociales-2026', 'junio-2026', 'ia-juridico-laboral']
-
-      const { error: flujoError } = await supabase
-        .from('flujos_embudo')
-        .upsert(
-          {
-            lead_id: leadId,
-            nombre_flujo: NOMBRE_FLUJO,
-            status_actual: isFirstTime ? 'nuevo' : 'recurrente',
-            actividad: 'lead_activo',
-            tags_proceso: tagsProceso,
-            fecha_ultima_interaccion: now,
-          },
-          { onConflict: 'lead_id,nombre_flujo', ignoreDuplicates: false }
-        )
-
-      if (flujoError) throw flujoError
-
-      // 3. Reutilizar access_token activo si existe, sino crear uno nuevo.
-      //    "Activo" = no usado y no caducado.
-      const { data: existingToken, error: existingTokenError } = await supabase
-        .from('access_tokens')
-        .select('token')
-        .eq('lead_id', leadId)
-        .eq('tipo', 'descarga')
-        .or('used.is.null,used.eq.false')
-        .or(`expires_at.is.null,expires_at.gt.${now}`)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle()
-
-      if (existingTokenError) throw existingTokenError
-
-      if (!existingToken) {
-        const { error: tokenError } = await supabase
-          .from('access_tokens')
-          .insert({
-            lead_id: leadId,
-            tipo: 'descarga',
-            metadata: {
-              fuente: NOMBRE_FLUJO,
-              evento: 'IA aplicada al sector jurídico-laboral · Málaga 16 jun 2026',
-              nombre,
-              email,
-            },
-          })
-
-        if (tokenError) throw tokenError
-      }
-
-      // n8n es notificado automáticamente via trigger de Supabase
+      // Toda la lógica de BD vive ahora en /api/lead (server-side, service_role).
+      // El navegador ya no toca Supabase directamente.
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, email, privacyChecked }),
+      })
       window.location.href = '/confirmar'
     } catch (err) {
       console.error('Error al registrar lead:', err)
-      // Si hay error de Supabase pero el lead ya existe, igualmente continuamos
+      // Mantengo el comportamiento previo: continuar a /confirmar igualmente.
       window.location.href = '/confirmar'
     }
   }
@@ -311,7 +230,7 @@ export default function Home() {
               <label htmlFor="privacy" style={{ fontSize: 12, color: '#7a7060', lineHeight: 1.5, cursor: 'pointer' }}>
                 Acepto la{' '}
                 <a
-                  href="https://afcademia.com/privacidad#politica-privacidad-title"
+                  href="https://afcademia.com/politica-de-privacidad/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: '#003F6B', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}
