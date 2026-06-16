@@ -54,7 +54,7 @@ export default function ConfirmarPage() {
             Te hemos enviado un email de confirmación.
           </p>
           <p style={{ fontSize: 15, color: '#7a7060', lineHeight: 1.6, marginBottom: 32 }}>
-            Haz clic en el enlace del email para confirmar tu dirección y acceder inmediatamente a los <strong style={{ color: '#003F6B' }}>5 materiales de la charla</strong>.
+            Haz clic en el enlace del email para confirmar tu dirección y acceder inmediatamente a los <strong style={{ color: '#003F6B' }}>4 materiales de la ponencia</strong>.
           </p>
 
           {/* Steps */}
